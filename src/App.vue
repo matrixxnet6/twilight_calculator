@@ -1,17 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Twilight Calculator</h1>
+    <hr>
+    <Calc
+      :players="allPlayers"
+      :games="allGames"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Calc from '@/components/Calc'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Calc
+  },
+  computed: {
+    allPlayers(){
+      return this.$store.getters.allPlayers;
+    },
+    allGames(){
+      return this.$store.getters.allGames;
+    }
+  },
+  mounted(){
+    this.$store.dispatch('fetchGames')
+    setInterval(() => this.$store.dispatch('fetchGames'),10000)
   }
 }
 </script>
@@ -22,7 +37,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #fff;
+  margin-bottom: 40px;
+  background: #2f3640;
+  padding: 30px 15px;
+}
+#app a{
+  font-weight: bold !important;
+  color: #fff !important;
 }
 </style>
